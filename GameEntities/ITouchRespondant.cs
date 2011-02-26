@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Input.Touch;
 
-namespace FarseerPhysicsWP7Framework.GameEntities
+namespace FarseerPhysicsBaseFramework.GameEntities
 {
     public interface ITouchRespondant
     {

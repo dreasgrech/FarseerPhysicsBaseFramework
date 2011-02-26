@@ -3,7 +3,7 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FarseerPhysicsWP7Framework.GameEntities.Physics
+namespace FarseerPhysicsBaseFramework.GameEntities.Physics
 {
     public class TexturedPhysicsEntity:PhysicsGameEntity
     {

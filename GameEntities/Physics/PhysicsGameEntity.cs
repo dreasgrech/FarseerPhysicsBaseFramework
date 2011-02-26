@@ -8,7 +8,7 @@ using FarseerPhysicsWP7Framework.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FarseerPhysicsWP7Framework.GameEntities.Physics
+namespace FarseerPhysicsBaseFramework.GameEntities.Physics
 {
     public class PhysicsGameEntity:Entity
     {

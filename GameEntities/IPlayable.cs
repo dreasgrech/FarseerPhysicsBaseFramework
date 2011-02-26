@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace FarseerPhysicsWP7Framework.GameEntities
+namespace FarseerPhysicsBaseFramework.GameEntities
 {
     public interface IPlayable
     {

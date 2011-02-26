@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FarseerPhysicsWP7Framework.GameEntities
+namespace FarseerPhysicsBaseFramework.GameEntities
 {
     public abstract class Entity : IPlayable
     {
