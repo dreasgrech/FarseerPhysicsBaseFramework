@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FarseerPhysicsWP7Framework.GameEntities.Physics
 {
-    class TexturedPhysicsEntity:PhysicsGameEntity
+    public class TexturedPhysicsEntity:PhysicsGameEntity
     {
         public TexturedGameEntity MainTexture { get; set; }
 

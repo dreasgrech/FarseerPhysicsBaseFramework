@@ -4,12 +4,13 @@ using FarseerPhysics.Common.Decomposition;
 using FarseerPhysics.Common.PolygonManipulation;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using FarseerPhysicsWP7Framework.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace FarseerPhysicsWP7Framework.GameEntities.Physics
 {
-    class PhysicsGameEntity:Entity
+    public class PhysicsGameEntity:Entity
     {
         protected World World { get; private set; }
         private Body body;

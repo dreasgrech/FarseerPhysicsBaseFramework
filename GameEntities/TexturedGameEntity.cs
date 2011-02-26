@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FarseerPhysicsWP7Framework.GameEntities
 {
-    sealed class TexturedGameEntity:Entity
+    public sealed class TexturedGameEntity:Entity
     {
         public Texture2D MainTexture { get; set; }
         public float ZIndex { get; set; }

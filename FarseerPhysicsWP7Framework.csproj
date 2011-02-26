@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>f387f01e-69f4-4d92-94be-927afd7b8af5</ProjectGuid>
+    <ProjectGuid>{E94A5D53-D4C6-40F7-B43C-94CEA4C4CFEC}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">Windows Phone</Platform>
@@ -41,6 +41,13 @@
     <XnaCompressContent>false</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DebugViewXNA, Version=3.2.4072.24171, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\farseerphysics-85352\DebugViews\DebugViewXNA\bin\Windows Phone\Release\DebugViewXNA.dll</HintPath>
+    </Reference>
+    <Reference Include="FarseerPhysicsXNA">
+      <HintPath>..\..\..\..\..\..\farseerphysics-85352\Branches\XNA\bin\Windows Phone\Release\FarseerPhysicsXNA.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
     </Reference>
@@ -78,7 +85,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="GameEntities\Entity.cs" />
+    <Compile Include="GameEntities\IPlayable.cs" />
+    <Compile Include="GameEntities\ITouchRespondant.cs" />
+    <Compile Include="GameEntities\Physics\PhysicsGameEntity.cs" />
+    <Compile Include="GameEntities\Physics\TexturedPhysicsEntity.cs" />
+    <Compile Include="GameEntities\TexturedGameEntity.cs" />
+    <Compile Include="Helpers\Camera\Camera2D.cs" />
+    <Compile Include="Helpers\Camera\ICamera2D.cs" />
+    <Compile Include="Helpers\Camera\IFocusable.cs" />
+    <Compile Include="Helpers\ConvertUnits.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
