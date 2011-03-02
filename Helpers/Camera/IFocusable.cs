@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace FarseerPhysicsWP7Framework.Helpers.Camera
+namespace FarseerPhysicsBaseFramework.Helpers.Camera
 {
     public interface IFocusable
     {

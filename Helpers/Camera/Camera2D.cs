@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FarseerPhysicsWP7Framework.Helpers.Camera
+namespace FarseerPhysicsBaseFramework.Helpers.Camera
 {
     public class Camera2D : GameComponent, ICamera2D
     {
@@ -28,6 +28,8 @@ namespace FarseerPhysicsWP7Framework.Helpers.Camera
             get { return _position; }
             set { _position = value; }
         }
+
+        public Vector2 PositionWithoutClamp { get; set; }
         public float Rotation { get; set; }
         public Vector2 Origin { get; set; }
         public float Scale { get; set; }
@@ -47,7 +49,7 @@ namespace FarseerPhysicsWP7Framework.Helpers.Camera
                         Matrix.CreateTranslation(-Position.X, -Position.Y, 0) *
                         Matrix.CreateRotationZ(Rotation) *
                         Matrix.CreateTranslation(Origin.X, Origin.Y, 0) *
-                        Matrix.CreateScale(new Vector3(Scale, Scale, Scale));
+                        Matrix.CreateScale(Scale);
 
             Origin = ScreenCenter / Scale;
             //Origin = new Vector2(ScreenCenter.X/Scale, ScreenCenter.Y*2 - 45);
@@ -57,6 +59,8 @@ namespace FarseerPhysicsWP7Framework.Helpers.Camera
 
             _position.X += (Focus.Position.X - Position.X) * MoveSpeed * delta;
             _position.Y += (Focus.Position.Y - Position.Y) * MoveSpeed * delta;
+
+            PositionWithoutClamp = _position;
 
             if (Clamp != null)
             {

@@ -4,7 +4,7 @@ using FarseerPhysics.Common.Decomposition;
 using FarseerPhysics.Common.PolygonManipulation;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
-using FarseerPhysicsWP7Framework.Helpers;
+using FarseerPhysicsBaseFramework.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -24,15 +24,19 @@ namespace FarseerPhysicsBaseFramework.GameEntities.Physics
             }
         }
 
-        private PhysicsGameEntity(Game game, World world): base(game)
+        public Category CollisionCategory { get; private set; }
+
+        private PhysicsGameEntity(Game game, World world, Category collisionCategory): base(game)
         {
             World = world;
+            CollisionCategory = collisionCategory;
         }
         
-        public PhysicsGameEntity(Game game, World world, Body body, Vector2 origin):this(game,world)
+        public PhysicsGameEntity(Game game, World world, Category collisionCategory, Body body, Vector2 origin):this(game,world,collisionCategory)
         {
             Body = body;
             Center = origin;
+            Body.CollisionCategories = collisionCategory;
         }
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace FarseerPhysicsBaseFramework.GameEntities.Physics
         /// <param name="texture"></param>
         /// <param name="bodyType"></param>
         /// <param name="density"></param>
-        public PhysicsGameEntity(Game game, World world, Texture2D texture, BodyType bodyType, float density):this(game,world)
+        public PhysicsGameEntity(Game game, World world, Category collisionCategory, Texture2D texture, BodyType bodyType, float density):this(game,world,collisionCategory)
         {
             //Create an array to hold the data from the texture
             uint[] data = new uint[texture.Width * texture.Height];
@@ -54,6 +58,7 @@ namespace FarseerPhysicsBaseFramework.GameEntities.Physics
             var vertices = PolygonTools.CreatePolygon(data, texture.Width, true);
             ConstructFromVertices(world,vertices,density);
             Body.BodyType = bodyType;
+            Body.CollisionCategories = collisionCategory;
         }
 
         /// <summary>
@@ -61,15 +66,22 @@ namespace FarseerPhysicsBaseFramework.GameEntities.Physics
         /// </summary>
         /// <param name="game"></param>
         /// <param name="world"></param>
-        /// <param name="vertices">The collection of vertices in DISPLAY UNITS</param>
+        /// <param name="vertices">The collection of vertices in display units (pixels)</param>
         /// <param name="bodyType"></param>
         /// <param name="density"></param>
-        public PhysicsGameEntity(Game game, World world, Vertices vertices, BodyType bodyType, float density):this(game,world)
+        public PhysicsGameEntity(Game game, World world, Category collisionCategory, Vertices vertices, BodyType bodyType, float density):this(game,world,collisionCategory)
         {
             ConstructFromVertices(world,vertices,density);
             Body.BodyType = bodyType;
+            Body.CollisionCategories = collisionCategory;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="world"></param>
+        /// <param name="vertices">The collection in vertices in display units (pixels)</param>
+        /// <param name="density"></param>
         private void ConstructFromVertices(World world, Vertices vertices, float density)
         {
             //We need to find the real center (centroid) of the vertices for 2 reasons:
@@ -85,21 +97,16 @@ namespace FarseerPhysicsBaseFramework.GameEntities.Physics
             vertices = SimplifyTools.ReduceByDistance(vertices, 4f);
 
             //Since it is a concave polygon, we need to partition it into several smaller convex polygons
-            //List<Vertices> list = BayazitDecomposer.ConvexPartition(textureVertices);
-            List<Vertices> list = EarclipDecomposer.ConvexPartition(vertices);
+            List<Vertices> list = BayazitDecomposer.ConvexPartition(vertices);
+            //List<Vertices> list = EarclipDecomposer.ConvexPartition(vertices);
 
             //Now we need to scale the vertices (result is in pixels, we use meters)
-            //At the same time we flip the y-axis. [I'm still not sure about this; why the flip?]
-            //var scale = new Vector2(0.01f, -0.01f);
-            var scale = new Vector2(0.01f, 0.01f); //currently keeping the y-axis as it is (ie not flipped)
+            Vector2 vertScale = new Vector2(ConvertUnits.SimUnitsToDisplayUnitsRatio);// new Vector2(ConvertUnits.ToSimUnits(1)) * _scale;
 
             foreach (Vertices newVertices in list)
             {
-                newVertices.Scale(ref scale);
 
-                //When we flip the y-axis, the orientation can change.
-                //We need to remember that FPE works with CCW polygons only.
-                newVertices.ForceCounterClockWise();
+                newVertices.Scale(ref vertScale);
             }
 
             Body = BodyFactory.CreateCompoundPolygon(world, list, density);
@@ -115,11 +122,11 @@ namespace FarseerPhysicsBaseFramework.GameEntities.Physics
         {
             get
             {
-                return ConvertUnits.ToDisplayUnits(Body.Rotation);
+                return Body.Rotation;
             }
             set
             {
-                Body.Rotation = ConvertUnits.ToSimUnits(value);
+                Body.Rotation = value;
             }
         }
     }

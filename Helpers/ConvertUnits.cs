@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace FarseerPhysicsWP7Framework.Helpers
+namespace FarseerPhysicsBaseFramework.Helpers
 {
     /// <summary>
     /// Convert units between display and simulation units.

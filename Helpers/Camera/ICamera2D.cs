@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FarseerPhysicsWP7Framework.Helpers.Camera
+namespace FarseerPhysicsBaseFramework.Helpers.Camera
 {
     public interface ICamera2D
     {
